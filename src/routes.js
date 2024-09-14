@@ -51,9 +51,21 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
+import { userType } from './utils/isAuth'
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
-  { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+  {
+    path: '/dashboard',
+    name:
+      userType == 'recruiter'
+        ? 'Dashboard-Recruteur'
+        : userType == 'applicant'
+          ? 'Dashboard-Postulant'
+          : userType == 'applicant'
+            ? 'Dashboard-Admin'
+            : '',
+  },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },

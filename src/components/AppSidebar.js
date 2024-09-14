@@ -12,9 +12,8 @@ import {
 
 import { AppSidebarNav } from './AppSidebarNav'
 
-
 // sidebar nav config
-import navigation from '../_nav'
+import { default as navigation } from '../_nav'
 
 const AppSidebar = () => {
   const dispatch = useDispatch()

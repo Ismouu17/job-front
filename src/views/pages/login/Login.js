@@ -1,85 +1,150 @@
-import { cilLockLocked, cilUser } from '@coreui/icons'
-import CIcon from '@coreui/icons-react'
-import {
-  CButton,
-  CCard,
-  CCardBody,
-  CCardGroup,
-  CCol,
-  CContainer,
-  CForm,
-  CFormInput,
-  CInputGroup,
-  CInputGroupText,
-  CRow,
-} from '@coreui/react'
-import React from 'react'
-import { Link } from 'react-router-dom'
+/* eslint-disable react/react-in-jsx-scope */
+import { Button, Grid, Paper, Typography, makeStyles } from '@material-ui/core'
+import axios from 'axios'
+import { useContext, useState } from 'react'
+import { Navigate } from 'react-router-dom'
 
-const Login = () => {
-  return (
-    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
-      <CContainer>
-        <CRow className="justify-content-center">
-          <CCol md={8}>
-            <CCardGroup>
-              <CCard className="p-4">
-                <CCardBody>
-                  <CForm>
-                    <h1>Login</h1>
-                    <p className="text-body-secondary">Sign In to your account</p>
-                    <CInputGroup className="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon={cilUser} />
-                      </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" />
-                    </CInputGroup>
-                    <CInputGroup className="mb-4">
-                      <CInputGroupText>
-                        <CIcon icon={cilLockLocked} />
-                      </CInputGroupText>
-                      <CFormInput
-                        type="password"
-                        placeholder="Password"
-                        autoComplete="current-password"
-                      />
-                    </CInputGroup>
-                    <CRow>
-                      <CCol xs={6}>
-                        <CButton color="primary" className="px-4">
-                          Login
-                        </CButton>
-                      </CCol>
-                      <CCol xs={6} className="text-right">
-                        <CButton color="link" className="px-0">
-                          Forgot password?
-                        </CButton>
-                      </CCol>
-                    </CRow>
-                  </CForm>
-                </CCardBody>
-              </CCard>
-              <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
-                <CCardBody className="text-center">
-                  <div>
-                    <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
-                      </CButton>
-                    </Link>
-                  </div>
-                </CCardBody>
-              </CCard>
-            </CCardGroup>
-          </CCol>
-        </CRow>
-      </CContainer>
-    </div>
+import { SetPopupContext } from '../../../App'
+import EmailInput from '../../../utils/EmailInput'
+import PasswordInput from '../../../utils/PasswordInput'
+
+import apiList from '../../../utils/apiList'
+import isAuth from '../../../utils/isAuth'
+
+const useStyles = makeStyles((theme) => ({
+  body: {
+    padding: '315px 50px',
+    background: '#E0E0E0',
+  },
+  inputBox: {
+    width: '400px',
+  },
+  submitButton: {
+    width: '300px',
+  },
+}))
+
+const Login = (props) => {
+  const classes = useStyles()
+  const setPopup = useContext(SetPopupContext)
+
+  const [loggedin, setLoggedin] = useState(isAuth())
+
+  const [loginDetails, setLoginDetails] = useState({
+    email: '',
+    password: '',
+  })
+
+  const [inputErrorHandler, setInputErrorHandler] = useState({
+    email: {
+      error: false,
+      message: '',
+    },
+    password: {
+      error: false,
+      message: '',
+    },
+  })
+
+  const handleInput = (key, value) => {
+    setLoginDetails({
+      ...loginDetails,
+      [key]: value,
+    })
+  }
+
+  const handleInputError = (key, status, message) => {
+    setInputErrorHandler({
+      ...inputErrorHandler,
+      [key]: {
+        error: status,
+        message: message,
+      },
+    })
+  }
+
+  const handleLogin = () => {
+    const verified = !Object.keys(inputErrorHandler).some((obj) => {
+      return inputErrorHandler[obj].error
+    })
+    if (verified) {
+      axios
+        .post(apiList.login, loginDetails)
+        .then((response) => {
+          localStorage.setItem('token', response.data.token)
+          localStorage.setItem('type', response.data.type)
+          setLoggedin(isAuth())
+          window.location.reload()
+          setPopup({
+            open: true,
+            severity: 'success',
+            message: 'Connecté avec succes',
+          })
+          console.log(response)
+        })
+        .catch((err) => {
+          setPopup({
+            open: true,
+            severity: 'error',
+            message: err.response.data.message,
+          })
+          console.log(err.response)
+        })
+    } else {
+      setPopup({
+        open: true,
+        severity: 'error',
+        message: 'Entrée invalide',
+      })
+    }
+  }
+
+  return loggedin ? (
+    <Navigate to="/dashboard" />
+  ) : (
+    <Paper elevation={0} className={classes.body}>
+      <Grid
+        container
+        direction="column"
+        spacing={4}
+        alignItems="center"
+        style={{ background: '#E0E0E0', alignContent: 'center' }}
+      >
+        <Grid item>
+          <Typography variant="h4" component="h2">
+            Se connecter
+          </Typography>
+        </Grid>
+        <Grid item>
+          <EmailInput
+            label="Votre Email"
+            value={loginDetails.email}
+            onChange={(event) => handleInput('email', event.target.value)}
+            inputErrorHandler={inputErrorHandler}
+            handleInputError={handleInputError}
+            className={classes.inputBox}
+          />
+        </Grid>
+        <Grid item>
+          <PasswordInput
+            label="Votre mot de passe"
+            value={loginDetails.password}
+            onChange={(event) => handleInput('password', event.target.value)}
+            className={classes.inputBox}
+          />
+        </Grid>
+        <Grid item>
+          <Button
+            style={{ background: 'linear-gradient(62deg, #adc4d4 0%, #bcb4c5 100%)' }}
+            variant="contained"
+            onClick={() => handleLogin()}
+            className={classes.submitButton}
+          >
+            Connexion
+          </Button>
+        </Grid>
+      </Grid>
+    </Paper>
   )
 }
 
