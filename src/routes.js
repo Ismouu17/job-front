@@ -20,6 +20,12 @@ const Spinners = React.lazy(() => import('./views/base/spinners/Spinners'))
 const Tabs = React.lazy(() => import('./views/base/tabs/Tabs'))
 const Tables = React.lazy(() => import('./views/base/tables/Tables'))
 const Tooltips = React.lazy(() => import('./views/base/tooltips/Tooltips'))
+const Home = React.lazy(() => import('./views/home/Home'))
+const MyJobs = React.lazy(() => import('./views/myjobs/MyJobs'))
+const JobApplications = React.lazy(() => import('./views/jobapplications/JobApplications'))
+const CreateJobs = React.lazy(() => import('./views/createJobs/CreateJobs'))
+const Applications = React.lazy(() => import('./views/applications/Applications'))
+const Employees = React.lazy(() => import('./views/acceptapplicant/AcceptedApplicants'))
 
 // Buttons
 const Buttons = React.lazy(() => import('./views/buttons/buttons/Buttons'))
@@ -66,6 +72,24 @@ const routes = [
             ? 'Dashboard-Admin'
             : '',
   },
+  { path: '/planning/entretien', name: 'Theme', element: Widgets, exact: true },
+  { path: '/analyse/job', name: 'Theme', element: Charts, exact: true },
+  { path: '/employees', name: 'Theme', element: Employees, exact: true },
+  { path: '/application', name: 'Theme', element: Applications, exact: true },
+  { path: '/addjob', name: 'Theme', element: CreateJobs, exact: true },
+  { path: '/job/applications/:jobId', name: 'Theme', element: JobApplications, exact: true },
+  { path: '/myjobs', name: 'Theme', element: MyJobs, exact: true },
+  { path: '/jobs', name: 'Theme', element: Home, exact: true },
+  { path: '/calendar/entretien', name: 'Theme', element: Widgets, exact: true },
+  { path: '/history/entretien', name: 'Theme', element: Widgets, exact: true },
+  { path: '/applicant/all', name: 'Theme', element: Widgets, exact: true },
+  { path: '/analyse/applicant', name: 'Theme', element: Charts, exact: true },
+  { path: '/recruitment/performance', name: 'Theme', element: Charts, exact: true },
+  { path: '/calendar/shedule', name: 'Theme', element: Widgets, exact: true },
+  { path: '/history/shedule', name: 'Theme', element: Widgets, exact: true },
+  { path: '/stats', name: 'Theme', element: Charts, exact: true },
+  { path: '/profile', name: 'Theme', exact: true },
+
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },

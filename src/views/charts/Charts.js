@@ -1,5 +1,4 @@
-import React from 'react'
-import { CCard, CCardBody, CCol, CCardHeader, CRow } from '@coreui/react'
+import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react'
 import {
   CChartBar,
   CChartDoughnut,
@@ -8,20 +7,20 @@ import {
   CChartPolarArea,
   CChartRadar,
 } from '@coreui/react-chartjs'
-import { DocsCallout } from 'src/components'
+import React from 'react'
 
 const Charts = () => {
   const random = () => Math.round(Math.random() * 100)
 
   return (
     <CRow>
-      <CCol xs={12}>
+      {/* <CCol xs={12}>
         <DocsCallout
           name="Chart"
           href="components/chart"
           content="React wrapper component for Chart.js 3.0, the most popular charting library."
         />
-      </CCol>
+      </CCol>*/}
       <CCol xs={6}>
         <CCard className="mb-4">
           <CCardHeader>Bar Chart</CCardHeader>

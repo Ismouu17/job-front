@@ -2,9 +2,12 @@ import { CSpinner, useColorModes } from '@coreui/react'
 import React, { Suspense, createContext, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { HashRouter, Route, Routes } from 'react-router-dom'
+import ProtectedRoute from './protectedRoute'
 import './scss/style.scss'
 import Logout from './utils/Logout'
 import MessagePopup from './utils/MessagePopup'
+
+import isAuth from './utils/isAuth'
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -49,7 +52,16 @@ const App = () => {
           }
         >
           <Routes>
-            <Route exact path="/login" name="Login Page" element={<Login />} />
+            <Route
+              exact
+              path="/login"
+              name="Login Page"
+              element={
+                <ProtectedRoute token={isAuth()}>
+                  <Login />
+                </ProtectedRoute>
+              }
+            />
             <Route exact path="/register" name="Register Page" element={<Register />} />
             <Route exact path="/logout" name="Log out" element={<Logout />} />
             <Route exact path="/404" name="Page 404" element={<Page404 />} />

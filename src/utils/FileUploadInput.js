@@ -6,10 +6,10 @@ import React, { createContext, useContext, useState } from 'react'
 
 const FileUploadInput = (props) => {
   const SetPopupContext = createContext({})
-  const setPopup = useContext < any > SetPopupContext
+  const setPopup = useContext(SetPopupContext)
 
   const { uploadTo, identifier, handleInput } = props
-  const [file, setFile] = useState < any > ''
+  const [file, setFile] = useState('')
   const [uploadPercentage, setUploadPercentage] = useState(0)
 
   const handleUpload = () => {

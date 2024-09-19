@@ -34,25 +34,25 @@ const _nav =
         {
           component: CNavItem,
           name: 'Toutes les offres',
-          to: '/theme/colors',
+          to: '/jobs',
           icon: <CIcon icon={cilClipboard} customClassName="nav-icon" />,
         },
         {
           component: CNavItem,
           name: 'Mes offres',
-          to: '/theme/typography',
+          to: '/myjobs',
           icon: <CIcon icon={cilClipboard} customClassName="nav-icon" />,
         },
         {
           component: CNavItem,
           name: 'Ajouter une offre',
-          to: '/theme/typography',
+          to: '/addjob',
           icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
         },
         {
           component: CNavItem,
           name: 'Analyse des offres',
-          to: '/theme/typography',
+          to: '/analyse/job',
           icon: <CIcon icon={cilClipboard} customClassName="nav-icon" />,
         },
         {
@@ -62,19 +62,19 @@ const _nav =
         {
           component: CNavItem,
           name: 'Planifications',
-          to: '/charts',
+          to: '/planning/entretien',
           icon: <CIcon icon={cilTask} customClassName="nav-icon" />,
         },
         {
           component: CNavItem,
           name: "Calendrier d'entretiens",
-          to: '/theme/colors',
+          to: '/calendar/entretien',
           icon: <CIcon icon={cilCalendar} customClassName="nav-icon" />,
         },
         {
           component: CNavItem,
           name: "Historiques d'entretiens",
-          to: '/theme/colors',
+          to: '/history/entretien',
           icon: <CIcon icon={cilHistory} customClassName="nav-icon" />,
         },
         {
@@ -84,13 +84,13 @@ const _nav =
         {
           component: CNavItem,
           name: 'Toutes les candidatures',
-          to: '/theme/colors',
+          to: '/applicant/all',
           icon: <CIcon icon={cilApps} customClassName="nav-icon" />,
         },
         {
           component: CNavItem,
           name: 'Analyse candidatures',
-          to: '/login',
+          to: '/analyse/applicant',
           icon: <CIcon icon={cibGoogleAnalytics} customClassName="nav-icon" />,
         },
         {
@@ -99,8 +99,14 @@ const _nav =
         },
         {
           component: CNavItem,
+          name: 'Mes employés',
+          to: '/employees',
+          icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+        },
+        {
+          component: CNavItem,
           name: 'Performances',
-          to: '/theme/colors',
+          to: '/recruitment/performance',
           icon: <CIcon icon={cibShowpad} customClassName="nav-icon" />,
         },
       ]
@@ -119,7 +125,7 @@ const _nav =
           {
             component: CNavItem,
             name: 'Toutes les offres',
-            to: '/theme/colors',
+            to: '/jobs',
             icon: <CIcon icon={cilClipboard} customClassName="nav-icon" />,
           },
           {
@@ -129,13 +135,13 @@ const _nav =
           {
             component: CNavItem,
             name: "Calendrier d'entretiens",
-            to: '/theme/colors',
+            to: '/calendar/shedule',
             icon: <CIcon icon={cilCalendar} customClassName="nav-icon" />,
           },
           {
             component: CNavItem,
             name: "Historiques d'entretiens",
-            to: '/theme/colors',
+            to: '/history/shedule',
             icon: <CIcon icon={cilHistory} customClassName="nav-icon" />,
           },
           {
@@ -145,13 +151,13 @@ const _nav =
           {
             component: CNavItem,
             name: 'Mes candidatures',
-            to: '/theme/colors',
+            to: '/application',
             icon: <CIcon icon={cilApps} customClassName="nav-icon" />,
           },
           {
             component: CNavItem,
             name: 'Vos statistiques',
-            to: '/login',
+            to: '/stats',
             icon: <CIcon icon={cibGoogleAnalytics} customClassName="nav-icon" />,
           },
         ]

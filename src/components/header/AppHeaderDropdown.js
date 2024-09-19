@@ -61,7 +61,12 @@ const AppHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem>
         <CDropdownHeader className="bg-body-secondary fw-semibold my-2"></CDropdownHeader>
-        <CDropdownItem href="#">
+        <CDropdownItem
+          type="button"
+          onClick={() => {
+            navigate('/profile')
+          }}
+        >
           <CIcon icon={cilUser} className="me-2" />
           Profil
         </CDropdownItem>
