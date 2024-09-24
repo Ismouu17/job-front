@@ -14,17 +14,54 @@ import {
   CInputGroupText,
   CRow,
 } from '@coreui/react'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { SetPopupContext } from '../../../App'
+
+import axios from 'axios'
+import apiList from '../../../utils/apiList'
+import isAuth from '../../../utils/isAuth'
 
 const Login = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
+  const setPopup = useContext(SetPopupContext)
 
-  const handleInput = (value) => {
-    setEmail(value)
+  const [loggedin, setLoggedin] = useState(isAuth())
+
+  const [loginDetails, setLoginDetails] = useState({
+    email: '',
+    password: '',
+  })
+
+  const [inputErrorHandler, setInputErrorHandler] = useState({
+    email: {
+      error: false,
+      message: '',
+    },
+    password: {
+      error: false,
+      message: '',
+    },
+  })
+
+  const handleInput = (key, value) => {
+    setLoginDetails({
+      ...loginDetails,
+      [key]: value,
+    })
   }
-  const handleLogin = () => {
+  const handleInputError = (key, status, message) => {
+    setInputErrorHandler({
+      ...inputErrorHandler,
+      [key]: {
+        error: status,
+        message: message,
+      },
+    })
+  }
+
+  /*const handleLogin = () => {
     console.log('Email', email)
     if (email == 'recruteur1@gmail.com') {
       console.log('ok recruiter')
@@ -39,6 +76,42 @@ const Login = () => {
     }
     window.location.reload()
     navigate('/dashboard', { replace: true })
+  }*/
+  const handleLogin = () => {
+    const verified = !Object.keys(inputErrorHandler).some((obj) => {
+      return inputErrorHandler[obj].error
+    })
+    if (verified) {
+      axios
+        .post(apiList.login, loginDetails)
+        .then((response) => {
+          localStorage.setItem('token', response.data.token)
+          localStorage.setItem('type', response.data.type)
+          setLoggedin(isAuth())
+          setPopup({
+            open: true,
+            severity: 'success',
+            message: 'Connecté avec succes',
+          })
+          window.location.reload()
+          navigate('/dashboard', { replace: true })
+          console.log(response)
+        })
+        .catch((err) => {
+          setPopup({
+            open: true,
+            severity: 'error',
+            message: err.response.data.message,
+          })
+          console.log(err.response)
+        })
+    } else {
+      setPopup({
+        open: true,
+        severity: 'error',
+        message: 'Entrée invalide',
+      })
+    }
   }
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
@@ -56,10 +129,13 @@ const Login = () => {
                         <CIcon icon={cibMailRu} />
                       </CInputGroupText>
                       <CFormInput
+                        value={loginDetails.email}
                         placeholder="Email"
                         autoComplete="username"
                         name="email"
-                        onChange={(event) => handleInput(event.target.value)}
+                        inputErrorHandler={inputErrorHandler}
+                        handleInputError={handleInputError}
+                        onChange={(event) => handleInput('email', event.target.value)}
                       />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
@@ -70,6 +146,8 @@ const Login = () => {
                         type="password"
                         name="password"
                         placeholder="Password"
+                        value={loginDetails.password}
+                        onChange={(event) => handleInput('password', event.target.value)}
                         autoComplete="current-password"
                       />
                     </CInputGroup>
