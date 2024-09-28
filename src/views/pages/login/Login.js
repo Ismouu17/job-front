@@ -61,22 +61,6 @@ const Login = () => {
     })
   }
 
-  /*const handleLogin = () => {
-    console.log('Email', email)
-    if (email == 'recruteur1@gmail.com') {
-      console.log('ok recruiter')
-      localStorage.setItem('token', 'fdsfFrdf659dff')
-      localStorage.setItem('type', 'recruiter')
-    } else if (email == 'postulant1@gmail.com') {
-      localStorage.setItem('token', 'fdsfFrdf659dff')
-      localStorage.setItem('type', 'applicant')
-    } else if (email == 'admin1@gmail.com') {
-      localStorage.setItem('token', 'fdsfFrdf659dff')
-      localStorage.setItem('type', 'admin')
-    }
-    window.location.reload()
-    navigate('/dashboard', { replace: true })
-  }*/
   const handleLogin = () => {
     const verified = !Object.keys(inputErrorHandler).some((obj) => {
       return inputErrorHandler[obj].error

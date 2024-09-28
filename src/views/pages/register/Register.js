@@ -230,6 +230,8 @@ const Signup = (props) => {
             severity: 'success',
             message: 'Connecté avec succes',
           })
+          window.location.reload()
+          navigate('/dashboard', { replace: true })
           console.log(response)
         })
         .catch((err) => {
@@ -300,6 +302,8 @@ const Signup = (props) => {
             severity: 'success',
             message: 'Connecté avec succes',
           })
+          window.location.reload()
+          navigate('/dashboard', { replace: true })
           console.log(response)
         })
         .catch((err) => {

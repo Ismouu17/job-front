@@ -2,10 +2,11 @@
 import { Button, Grid, LinearProgress, TextField } from '@material-ui/core'
 import { CloudUpload } from '@material-ui/icons'
 import Axios from 'axios'
-import React, { createContext, useContext, useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { SetPopupContext } from '../App'
 
 const FileUploadInput = (props) => {
-  const SetPopupContext = createContext({})
+  //const SetPopupContext = createContext({})
   const setPopup = useContext(SetPopupContext)
 
   const { uploadTo, identifier, handleInput } = props
